@@ -1,37 +1,32 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useState } from 'react';
 import { Form, Label, Input, Button } from './ContactForm.styled';
 
-export class ContactForm extends Component {
-  state = {
-    name: '',
-    number: '',
+export const ContactForm = ({onSubmit}) => {
+  const [formData, setFormData] = useState({ name: '', number: '' });
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
   };
 
-  handleChange = event => {
-    this.setState({ [event.currentTarget.name]: event.currentTarget.value });
-  };
-
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-
-    this.props.onSubmit(this.state);
-
-    this.resetForm();
+    onSubmit(formData);
+    resetForm();
   };
 
-  resetForm() {
-    this.setState({ name: '', number: '' });
-  }
+  const resetForm = () => {
+    setFormData({ name: '', number: '' });
+  };
 
-  render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Label>
           Name
           <Input
-            value={this.state.name}
-            onChange={this.handleChange}
+            value={formData.name}
+            onChange={handleChange}
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -42,8 +37,8 @@ export class ContactForm extends Component {
         <Label>
           Number
           <Input
-            value={this.state.number}
-            onChange={this.handleChange}
+            value={formData.number}
+            onChange={handleChange}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -55,7 +50,6 @@ export class ContactForm extends Component {
       </Form>
     );
   }
-}
 
 ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,

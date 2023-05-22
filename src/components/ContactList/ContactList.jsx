@@ -1,27 +1,24 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
 import { List } from './ContactList.styled';
 import { Contact } from './Contact/Contact';
 
-export class ContactList extends Component {
-  render() {
+export const ContactList = ({contacts, onDeleteContact}) => {
     return (
       <List>
-        {this.props.contacts.map(contact => {
+        {contacts.map(({id, name,number}) => {
           return (
             <Contact
-              key={contact.id}
-              name={contact.name}
-              number={contact.number}
-              onDeleteContact={this.props.onDeleteContact}
-              id={contact.id}
+              key={id}
+              name={name}
+              number={number}
+              onDeleteContact={onDeleteContact}
+              id={id}
             />
           );
         })}
       </List>
     );
   }
-}
 
 Contact.propTypes = {
   name: PropTypes.string.isRequired,
