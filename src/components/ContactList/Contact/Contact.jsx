@@ -6,20 +6,17 @@ import {
   DeleteButton,
 } from './Contact.styled';
 
-export const Contact = ({name, number, onDeleteContact, id}) => {
-    return (
-      <ContactItem>
-        <ContactName>{name}:</ContactName>
-        <ContactNumber>{number}</ContactNumber>
-        <DeleteButton
-          type="button"
-          onClick={() => onDeleteContact(id)}
-        >
-          Delete
-        </DeleteButton>
-      </ContactItem>
-    );
-  }
+export const Contact = ({ name, number, onDeleteContact, id }) => {
+  return (
+    <ContactItem>
+      <ContactName>{name}:</ContactName>
+      <ContactNumber>{number}</ContactNumber>
+      <DeleteButton type="button" onClick={() => onDeleteContact(id)}>
+        Delete
+      </DeleteButton>
+    </ContactItem>
+  );
+};
 
 Contact.propTypes = {
   name: PropTypes.string.isRequired,
